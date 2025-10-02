@@ -1,0 +1,23 @@
+/* Reset */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+/* Theme */
+:root {
+	color-scheme: light dark;
+    font-family: 'Alan Sans', sans-serif;
+}
+
+body {
+    margin: 1rem;
+}
