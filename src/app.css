@@ -12,6 +12,10 @@ input {
     font: inherit;
 }
 
+img {
+	object-fit: cover;
+}
+
 /* Theme */
 :root {
 	color-scheme: light dark;
@@ -20,4 +24,18 @@ input {
 
 body {
     margin: 1rem;
+}
+.icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
