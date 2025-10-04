@@ -1,6 +1,6 @@
 import type { Creator, CreatorDataWrapper, CreatorSummary } from '$lib/types';
 import { fetchMarvelData, type FetchOptions } from './client';
-import { getIdFromURI } from './util';
+import { fetchFromURIs, getIdFromURI } from './util';
 
 /**
  * Get all creators with optional filters
@@ -127,12 +127,6 @@ export function getCreatorStories(creatorId: number, options: FetchOptions = {})
  * * Get Creators From URI List
  * Given a list of Creator Summary, fetch the corresponding creators.
  */
-export async function getCreatorsFromURIs(
-	resources: CreatorSummary[]
-): Promise<Creator[]> {
-	const ids = resources
-		.map((resource) => getIdFromURI(resource.resourceURI))
-		.filter((n) => n !== null);
-	const wrappers = await Promise.all(ids.map((id) => getCreatorById(id)));
-	return wrappers.map((item) => item.data.results[0]);
+export function getCreatorsFromURIs(resources: CreatorSummary[]): Promise<Creator[]> {
+	return fetchFromURIs(resources, getCreatorById);
 }

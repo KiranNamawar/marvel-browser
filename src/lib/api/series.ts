@@ -1,6 +1,6 @@
 import type { Series, SeriesDataWrapper, SeriesSummary } from '$lib/types';
 import { fetchMarvelData, type FetchOptions } from './client';
-import { getIdFromURI } from './util';
+import { fetchFromURIs } from './util';
 
 /**
  * Get all series with optional filters
@@ -133,11 +133,8 @@ export function getSeriesStories(seriesId: number, options: FetchOptions = {}): 
 /**
  * Get series from URI List
  * Given a list of Series Summary, fetch the corresponding series.
+ * Series that fail to fetch (e.g., 404) are filtered out.
  */
 export async function getSeriesFromURIs(resources: SeriesSummary[]): Promise<Series[]> {
-	const ids = resources
-		.map((resource) => getIdFromURI(resource.resourceURI))
-		.filter((n) => n !== null);
-	const wrappers = await Promise.all(ids.map((id) => getSeriesById(id)));
-	return wrappers.map((item) => item.data.results[0]);
+	return fetchFromURIs(resources, getSeriesById);
 }
