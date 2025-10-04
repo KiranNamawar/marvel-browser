@@ -87,62 +87,138 @@ export async function loadDataForEntity(
 
 	try {
 		if (entity === 'character') {
-			const character = (await getCharacterById(id)).data.results[0];
+			const response = await getCharacterById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Character not found' });
+			}
+			const character = response.data.results[0];
+
+			const [comics, series, events, stories] = await Promise.allSettled([
+				getComicsFromURIs(character.comics.items),
+				getSeriesFromURIs(character.series.items),
+				getEventsFromURIs(character.events.items),
+				getStoriesFromURIs(character.stories.items)
+			]);
+
 			return {
 				character,
-				comics: await getComicsFromURIs(character.comics.items),
-				series: await getSeriesFromURIs(character.series.items),
-				events: await getEventsFromURIs(character.events.items),
-				stories: await getStoriesFromURIs(character.stories.items)
+				comics: comics.status === 'fulfilled' ? comics.value : [],
+				series: series.status === 'fulfilled' ? series.value : [],
+				events: events.status === 'fulfilled' ? events.value : [],
+				stories: stories.status === 'fulfilled' ? stories.value : []
 			};
 		} else if (entity === 'comic') {
-			const comic = (await getComicById(id)).data.results[0];
+			const response = await getComicById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Comic not found' });
+			}
+			const comic = response.data.results[0];
+
+			const [characters, series, events, stories, creators] = await Promise.allSettled([
+				getCharactersFromURIs(comic.characters.items),
+				getSeriesFromURIs([comic.series]),
+				getEventsFromURIs(comic.events.items),
+				getStoriesFromURIs(comic.stories.items),
+				getCreatorsFromURIs(comic.creators.items)
+			]);
+
 			return {
 				comic,
-				characters: await getCharactersFromURIs(comic.characters.items),
-				series: await getSeriesFromURIs([comic.series]),
-				events: await getEventsFromURIs(comic.events.items),
-				stories: await getStoriesFromURIs(comic.stories.items),
-				creators: await getCreatorsFromURIs(comic.creators.items)
+				characters: characters.status === 'fulfilled' ? characters.value : [],
+				series: series.status === 'fulfilled' ? series.value : [],
+				events: events.status === 'fulfilled' ? events.value : [],
+				stories: stories.status === 'fulfilled' ? stories.value : [],
+				creators: creators.status === 'fulfilled' ? creators.value : []
 			};
 		} else if (entity === 'event') {
-			const event = (await getEventById(id)).data.results[0];
+			const response = await getEventById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Event not found' });
+			}
+			const event = response.data.results[0];
+
+			const [comics, series, characters, stories, creators] = await Promise.allSettled([
+				getComicsFromURIs(event.comics.items),
+				getSeriesFromURIs(event.series.items),
+				getCharactersFromURIs(event.characters.items),
+				getStoriesFromURIs(event.stories.items),
+				getCreatorsFromURIs(event.creators.items)
+			]);
+
 			return {
 				event,
-				comics: await getComicsFromURIs(event.comics.items),
-				series: await getSeriesFromURIs(event.series.items),
-				characters: await getCharactersFromURIs(event.characters.items),
-				stories: await getStoriesFromURIs(event.stories.items),
-				creators: await getCreatorsFromURIs(event.creators.items)
+				comics: comics.status === 'fulfilled' ? comics.value : [],
+				series: series.status === 'fulfilled' ? series.value : [],
+				characters: characters.status === 'fulfilled' ? characters.value : [],
+				stories: stories.status === 'fulfilled' ? stories.value : [],
+				creators: creators.status === 'fulfilled' ? creators.value : []
 			};
 		} else if (entity === 'series') {
-			const series = (await getSeriesById(id)).data.results[0];
+			const response = await getSeriesById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Series not found' });
+			}
+			const series = response.data.results[0];
+
+			const [comics, characters, events, stories, creators] = await Promise.allSettled([
+				getComicsFromURIs(series.comics.items),
+				getCharactersFromURIs(series.characters.items),
+				getEventsFromURIs(series.events.items),
+				getStoriesFromURIs(series.stories.items),
+				getCreatorsFromURIs(series.creators.items)
+			]);
+
 			return {
 				series,
-				comics: await getComicsFromURIs(series.comics.items),
-				characters: await getCharactersFromURIs(series.characters.items),
-				events: await getEventsFromURIs(series.events.items),
-				stories: await getStoriesFromURIs(series.stories.items),
-				creators: await getCreatorsFromURIs(series.creators.items)
+				comics: comics.status === 'fulfilled' ? comics.value : [],
+				characters: characters.status === 'fulfilled' ? characters.value : [],
+				events: events.status === 'fulfilled' ? events.value : [],
+				stories: stories.status === 'fulfilled' ? stories.value : [],
+				creators: creators.status === 'fulfilled' ? creators.value : []
 			};
 		} else if (entity === 'story') {
-			const story = (await getStoryById(id)).data.results[0];
+			const response = await getStoryById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Story not found' });
+			}
+			const story = response.data.results[0];
+
+			const [comics, series, events, characters, creators] = await Promise.allSettled([
+				getComicsFromURIs(story.comics.items),
+				getSeriesFromURIs(story.series.items),
+				getEventsFromURIs(story.events.items),
+				getCharactersFromURIs(story.characters.items),
+				getCreatorsFromURIs(story.creators.items)
+			]);
+
 			return {
 				story,
-				comics: await getComicsFromURIs(story.comics.items),
-				series: await getSeriesFromURIs(story.series.items),
-				events: await getEventsFromURIs(story.events.items),
-				characters: await getCharactersFromURIs(story.characters.items),
-				creators: await getCreatorsFromURIs(story.creators.items)
+				comics: comics.status === 'fulfilled' ? comics.value : [],
+				series: series.status === 'fulfilled' ? series.value : [],
+				events: events.status === 'fulfilled' ? events.value : [],
+				characters: characters.status === 'fulfilled' ? characters.value : [],
+				creators: creators.status === 'fulfilled' ? creators.value : []
 			};
 		} else if (entity === 'creator') {
-			const creator = (await getCreatorById(id)).data.results[0];
+			const response = await getCreatorById(id);
+			if (!response?.data?.results?.[0]) {
+				error(404, { message: 'Creator not found' });
+			}
+			const creator = response.data.results[0];
+
+			const [comics, series, events, stories] = await Promise.allSettled([
+				getComicsFromURIs(creator.comics.items),
+				getSeriesFromURIs(creator.series.items),
+				getEventsFromURIs(creator.events.items),
+				getStoriesFromURIs(creator.stories.items)
+			]);
+
 			return {
 				creator,
-				comics: await getComicsFromURIs(creator.comics.items),
-				series: await getSeriesFromURIs(creator.series.items),
-				events: await getEventsFromURIs(creator.events.items),
-				stories: await getStoriesFromURIs(creator.stories.items)
+				comics: comics.status === 'fulfilled' ? comics.value : [],
+				series: series.status === 'fulfilled' ? series.value : [],
+				events: events.status === 'fulfilled' ? events.value : [],
+				stories: stories.status === 'fulfilled' ? stories.value : []
 			};
 		}
 

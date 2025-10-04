@@ -5,4 +5,4 @@
 	const { creator }: { creator: Creator } = $props();
 </script>
 
-<img src={getImageUrl(creator.thumbnail)} alt={creator.fullName} />
+<img src={getImageUrl(creator.thumbnail, 'portrait_fantastic')} alt={creator.fullName} />

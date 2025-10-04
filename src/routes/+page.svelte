@@ -52,6 +52,7 @@
 			}
 		} catch (err) {
 			console.error(err);
+			result = null;
 		} finally {
 			loading = false;
 		}
@@ -105,17 +106,12 @@
 		</div>
 	</div>
 	<div class="result">
-		{#if result}
+		{#if result && result.data && result.data.results}
 			{#if category === 'characters'}
 				{#each (result as CharacterDataWrapper).data.results as character (character.id)}
 					<a href="/characters/{character.id}">
 						<div class="item">
-							<img
-								src={getImageUrl(
-									character.thumbnail, 'portrait_small'
-								)}
-								alt={character.name}
-							/>
+							<img src={getImageUrl(character.thumbnail, 'portrait_small')} alt={character.name} />
 							<div>
 								<h3>{character.name}</h3>
 								<p>{character.description}</p>
@@ -127,10 +123,7 @@
 				{#each (result as ComicDataWrapper).data.results as comic (comic.id)}
 					<a href="/comics/{comic.id}">
 						<div class="item">
-							<img
-								src={getImageUrl(comic.thumbnail, 'portrait_small')}
-								alt={comic.title}
-							/>
+							<img src={getImageUrl(comic.thumbnail, 'portrait_small')} alt={comic.title} />
 							<h3>{comic.title}</h3>
 						</div>
 					</a>
@@ -139,12 +132,7 @@
 				{#each (result as SeriesDataWrapper).data.results as series (series.id)}
 					<a href="/series/{series.id}">
 						<div class="item">
-							<img
-								src={getImageUrl(
-									series.thumbnail,'portrait_small'
-								)}
-								alt={series.title}
-							/>
+							<img src={getImageUrl(series.thumbnail, 'portrait_small')} alt={series.title} />
 							<h3>{series.title}</h3>
 						</div>
 					</a>
@@ -153,10 +141,7 @@
 				{#each (result as EventDataWrapper).data.results as event (event.id)}
 					<a href="/events/{event.id}">
 						<div class="item">
-							<img
-								src={getImageUrl(event.thumbnail, 'portrait_small')}
-								alt={event.title}
-							/>
+							<img src={getImageUrl(event.thumbnail, 'portrait_small')} alt={event.title} />
 							<h3>{event.title}</h3>
 						</div>
 					</a>
@@ -165,12 +150,7 @@
 				{#each (result as CreatorDataWrapper).data.results as creator (creator.id)}
 					<a href="/creators/{creator.id}">
 						<div class="item">
-							<img
-								src={getImageUrl(
-									creator.thumbnail,'portrait_small'
-								)}
-								alt={creator.fullName}
-							/>
+							<img src={getImageUrl(creator.thumbnail, 'portrait_small')} alt={creator.fullName} />
 							<h3>{creator.fullName}</h3>
 						</div>
 					</a>
