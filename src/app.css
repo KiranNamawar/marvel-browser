@@ -25,6 +25,8 @@ img {
 body {
     margin: 1rem;
 }
+
+/* Utility */
 .icon {
 	display: flex;
 	align-items: center;

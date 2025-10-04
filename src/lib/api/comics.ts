@@ -1,5 +1,6 @@
-import type { ComicDataWrapper } from '$lib/types';
+import type { Comic, ComicDataWrapper, ComicSummary } from '$lib/types';
 import { fetchMarvelData, type FetchOptions } from './client';
+import { getIdFromURI } from './util';
 
 /**
  * Get all comics with optional filters
@@ -130,4 +131,14 @@ export function getComicEvents(comicId: number, options: FetchOptions = {}): Pro
  */
 export function getComicStories(comicId: number, options: FetchOptions = {}): Promise<any> {
 	return fetchMarvelData(`/comics/${comicId}/stories`, options);
+}
+
+/**
+ * Get Comics From URI List
+ * Given a list of Resource Summary, fetch the corresponding comics.
+ */
+export async function getComicsFromURIs(resources: ComicSummary[]): Promise<Comic[]> {
+	const ids = resources.map(resource => getIdFromURI(resource.resourceURI)).filter(n => n !== null);
+	const wrappers = await Promise.all(ids.map(id => getComicById(id)));
+	return wrappers.map(item => item.data.results[0])
 }

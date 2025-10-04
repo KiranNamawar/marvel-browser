@@ -1,5 +1,6 @@
-import type { EventDataWrapper } from '$lib/types';
+import type { EventDataWrapper, Event, EventSummary } from '$lib/types';
 import { fetchMarvelData, type FetchOptions } from './client';
+import { getIdFromURI } from './util';
 
 /**
  * Get all events with optional filters
@@ -111,4 +112,16 @@ export function getEventSeries(eventId: number, options: FetchOptions = {}): Pro
  */
 export function getEventStories(eventId: number, options: FetchOptions = {}): Promise<any> {
 	return fetchMarvelData(`/events/${eventId}/stories`, options);
+}
+
+/**
+ * Get Events From URI List
+ * Given a list of Event Summary, fetch the corresponding events.
+ */
+export async function getEventsFromURIs(resources: EventSummary[]): Promise<Event[]> {
+	const ids = resources
+		.map((resource) => getIdFromURI(resource.resourceURI))
+		.filter((n) => n !== null);
+	const wrappers = await Promise.all(ids.map((id) => getEventById(id)));
+	return wrappers.map((item) => item.data.results[0]);
 }

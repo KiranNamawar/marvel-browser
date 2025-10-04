@@ -62,14 +62,13 @@
 		category;
 
 		clearTimeout(debounceTimer);
-		if (query.trim().length >= 3) {
+		if (query.trim().length > 3) {
 			debounceTimer = setTimeout(async () => {
 				await search(query, category);
 			}, 300);
 		} else {
 			result = null;
 		}
-
 		return () => clearTimeout(debounceTimer);
 	});
 

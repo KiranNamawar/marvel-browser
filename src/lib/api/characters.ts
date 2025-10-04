@@ -1,5 +1,6 @@
-import type { CharacterDataWrapper } from '$lib/types';
+import type { Character, CharacterDataWrapper, ResourceSummary } from '$lib/types';
 import { fetchMarvelData, type FetchOptions } from './client';
+import { getIdFromURI } from './util';
 
 /**
  * Get all characters with optional filters
@@ -94,4 +95,14 @@ export function getCharacterSeries(characterId: number, options: FetchOptions = 
  */
 export function getCharacterStories(characterId: number, options: FetchOptions = {}): Promise<any> {
 	return fetchMarvelData(`/characters/${characterId}/stories`, options);
+}
+
+/**
+ * Get Characters From URI List
+ * Given a list of Resource Summary, fetch the corresponding characters.
+ */
+export async function getCharactersFromURIs(resources: ResourceSummary[]): Promise<Character[]> {
+	const ids = resources.map(resource => getIdFromURI(resource.resourceURI)).filter(n => n !== null);
+	const wrappers = await Promise.all(ids.map(id => getCharacterById(id)));
+	return wrappers.map(item => item.data.results[0])
 }

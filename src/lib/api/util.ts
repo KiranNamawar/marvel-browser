@@ -26,3 +26,18 @@ export function getImageUrl(
 ): string {
 	return `${path}/${variant}.${extension}`;
 }
+
+type ResourceType = 'characters' | 'comics' | 'creators' | 'events' | 'series' | 'stories';
+
+export function parseResourceURI(uri: string): { type: ResourceType; id: number } | null {
+	const match = uri.match(/\/(\w+)\/(\d+)$/);
+	if (match) {
+		return { type: match[1] as ResourceType, id: parseInt(match[2], 10) };
+	}
+	return null;
+}
+
+export function getIdFromURI(uri: string): number | null {
+	const parsed = parseResourceURI(uri);
+	return parsed ? parsed.id : null;
+}
