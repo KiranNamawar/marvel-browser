@@ -46,7 +46,7 @@ export async function fetchMarvelData<T>(endpoint: string, params: FetchOptions 
 	const cacheKey = getCacheKey(endpoint, params);
 
 	// Try to get from cache
-	const cached = getCachedData<T>(cacheKey);
+	const cached = await getCachedData<T>(cacheKey);
 	if (cached) {
 		console.log(`Cache hit for: ${endpoint}`);
 		return cached;
@@ -73,7 +73,7 @@ export async function fetchMarvelData<T>(endpoint: string, params: FetchOptions 
 		}
 
 		// Cache the successful response
-		setCachedData(cacheKey, data);
+		await setCachedData(cacheKey, data);
 
 		return data;
 	} catch (error) {

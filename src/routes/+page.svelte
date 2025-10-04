@@ -164,11 +164,12 @@
 	h1 {
 		text-align: center;
 	}
-	.main, .category, .search, .input {
+	.main, .category, .search {
 		margin-top: 1rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 	}
 	.active {
 		background-color: red;
@@ -178,6 +179,9 @@
 		border-radius: 10px;
 		width: 40%;
 		padding: 0.5rem;
+		@media(width < 500px) {
+			width: 90%;
+		}
 	}
 	.category {
 		display: flex;
@@ -207,7 +211,7 @@
 		}
 	}
 	button {
-		border: light-dark(rgb(193, 192, 192), rgb(76, 75, 75));
+		border: none;
 		padding: 0.5rem;
 		border-radius: 10px;
 		cursor: pointer;
@@ -218,12 +222,25 @@
 		gap: 0.5rem;
 		width: 50%;
 		margin: 0.5rem;
+
+		@media(width < 500px) {
+			width: 90%;
+		}
 		& .item {
 			display: flex;
 			gap: 0.5rem;
 			border: solid;
+			padding: 0.5rem;
 			border-radius: 10px;
 			overflow: hidden;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: var(--text-color);
+		&:hover {
+			color: red;
 		}
 	}
 </style>
