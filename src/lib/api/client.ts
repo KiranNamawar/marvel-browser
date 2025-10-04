@@ -60,7 +60,9 @@ export async function fetchMarvelData<T>(endpoint: string, params: FetchOptions 
 		const response = await fetch(url);
 
 		if (!response.ok) {
-			throw new Error(`Marvel API error: ${response.status} ${response.statusText}`);
+			const errorMsg = `Marvel API error: ${response.status}`;
+			console.warn(`${errorMsg} for ${endpoint}`);
+			throw new Error(errorMsg);
 		}
 
 		const data = await response.json();
