@@ -1,4 +1,4 @@
-import type { MarvelDataWrapper } from '$lib/types';
+import type { Image, MarvelDataWrapper } from '$lib/types';
 
 type ImageVariant =
 	| 'detail'
@@ -22,11 +22,10 @@ type ImageVariant =
 	| 'landscape_incredible';
 
 export function getImageUrl(
-	path: string,
-	extension: string,
+	thumbnail: Image,
 	variant: ImageVariant = 'detail'
 ): string {
-	return `${path}/${variant}.${extension}`;
+	return `${thumbnail.path}/${variant}.${thumbnail.extension}`;
 }
 
 type ResourceType = 'characters' | 'comics' | 'creators' | 'events' | 'series' | 'stories';

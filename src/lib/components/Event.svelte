@@ -6,6 +6,6 @@
 </script>
 
 <img
-	src={getImageUrl(event.thumbnail.path, event.thumbnail.extension, 'portrait_medium')}
+	src={getImageUrl(event.thumbnail, 'portrait_medium')}
 	alt={event.title}
 />

@@ -1,5 +1,5 @@
 import { loadDataForEntity } from '$lib/util.js';
 
 export function load({ params }) {
-	return loadDataForEntity('character', Number(params.id));
+    return loadDataForEntity('creator', Number(params.id));
 }

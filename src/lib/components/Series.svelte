@@ -6,6 +6,6 @@
 </script>
 
 <img
-	src={getImageUrl(series.thumbnail.path, series.thumbnail.extension, 'portrait_medium')}
+	src={getImageUrl(series.thumbnail, 'portrait_medium')}
 	alt={series.title}
 />

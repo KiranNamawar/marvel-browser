@@ -13,7 +13,7 @@
 
 <h1>{character.name}</h1>
 <img
-	src={getImageUrl(character.thumbnail.path, character.thumbnail.extension)}
+	src={getImageUrl(character.thumbnail)}
 	alt={character.name}
 />
 {#if comics.length !== 0}

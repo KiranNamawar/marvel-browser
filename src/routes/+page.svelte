@@ -112,9 +112,7 @@
 						<div class="item">
 							<img
 								src={getImageUrl(
-									character.thumbnail.path,
-									character.thumbnail.extension,
-									'portrait_small'
+									character.thumbnail, 'portrait_small'
 								)}
 								alt={character.name}
 							/>
@@ -130,7 +128,7 @@
 					<a href="/comics/{comic.id}">
 						<div class="item">
 							<img
-								src={getImageUrl(comic.thumbnail.path, comic.thumbnail.extension, 'portrait_small')}
+								src={getImageUrl(comic.thumbnail, 'portrait_small')}
 								alt={comic.title}
 							/>
 							<h3>{comic.title}</h3>
@@ -143,9 +141,7 @@
 						<div class="item">
 							<img
 								src={getImageUrl(
-									series.thumbnail.path,
-									series.thumbnail.extension,
-									'portrait_small'
+									series.thumbnail,'portrait_small'
 								)}
 								alt={series.title}
 							/>
@@ -158,7 +154,7 @@
 					<a href="/events/{event.id}">
 						<div class="item">
 							<img
-								src={getImageUrl(event.thumbnail.path, event.thumbnail.extension, 'portrait_small')}
+								src={getImageUrl(event.thumbnail, 'portrait_small')}
 								alt={event.title}
 							/>
 							<h3>{event.title}</h3>
@@ -171,9 +167,7 @@
 						<div class="item">
 							<img
 								src={getImageUrl(
-									creator.thumbnail.path,
-									creator.thumbnail.extension,
-									'portrait_small'
+									creator.thumbnail,'portrait_small'
 								)}
 								alt={creator.fullName}
 							/>
