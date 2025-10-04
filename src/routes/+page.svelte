@@ -78,7 +78,7 @@
 
 <h1>Marvel Browser</h1>
 
-<main>
+<div class="main">
 	<div class="search">
 		<div class="category">
 			<button
@@ -158,13 +158,13 @@
 			{/if}
 		{/if}
 	</div>
-</main>
+</div>
 
 <style>
 	h1 {
 		text-align: center;
 	}
-	main {
+	.main, .category, .search, .input {
 		margin-top: 1rem;
 		display: flex;
 		flex-direction: column;

@@ -9,7 +9,7 @@
 
 button,
 input {
-    font: inherit;
+	font: inherit;
 }
 
 img {
@@ -19,11 +19,14 @@ img {
 /* Theme */
 :root {
 	color-scheme: light dark;
-    font-family: 'Alan Sans', sans-serif;
+	font-family: 'Alan Sans', sans-serif;
+
+	--text-color: light-dark(black, white);
 }
 
 body {
-    margin: 1rem;
+	color: var(--text-color);
+	padding: 1rem;
 }
 
 /* Utility */
