@@ -10,18 +10,43 @@ self.addEventListener('fetch', (evt) => {
 
 	async function respond() {
 		const url = new URL(evt.request.url);
+		
+		// Handle Marvel API requests
 		if (url.href.includes(marvelEndpoint)) {
 			const cache = await caches.open(CACHE);
 			const cached = await cache.match(evt.request);
 			if (cached) {
-				console.log('[SW] Cache hit for:', url.href); // DEBUG
+				console.log('[SW] API Cache hit for:', url.href);
 				return cached;
 			}
 			try {
-				console.log('[SW] Cache miss, fetching from network:', url.href); // DEBUG
+				console.log('[SW] API Cache miss, fetching from network:', url.href);
 				const res = await fetch(evt.request);
 				if (res.ok) {
-					cache.put(evt.request, res.clone());
+					await cache.put(evt.request, res.clone());
+				}
+				return res;
+			} catch (err) {
+				return new Response('API Offline or network error', {
+					status: 503,
+					statusText: 'Service Unavailable'
+				});
+			}
+		}
+		
+		// Handle Marvel image requests
+		if (url.href.includes('i.annihil.us')) {
+			const imageCache = await caches.open(IMAGES_CACHE);
+			const cached = await imageCache.match(evt.request);
+			if (cached) {
+				console.log('[SW] Image Cache hit for:', url.href);
+				return cached;
+			}
+			try {
+				console.log('[SW] Image Cache miss, fetching from network:', url.href);
+				const res = await fetch(evt.request);
+				if (res.ok) {
+					await imageCache.put(evt.request, res.clone());
 				}
 				return res;
 			} catch (err) {
@@ -51,7 +76,11 @@ self.addEventListener('fetch', (evt) => {
 				});
 			}
 		} else {
-			return fetch(evt.request);
+			try {
+				return fetch(evt.request);
+			} catch(e) {
+				return Response.error()
+			}
 		}
 	}
 	evt.respondWith(respond());
