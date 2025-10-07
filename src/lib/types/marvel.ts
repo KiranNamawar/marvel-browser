@@ -5,27 +5,20 @@ export interface Image {
 }
 
 export interface Url {
-	type: string;
+	type: 'detail' | 'wiki' | 'comiclink' | string;
 	url: string;
 }
 
-export interface CharacterList {
+export interface ResourceList<T> {
 	available: number;
 	returned: number;
 	collectionURI: string;
-	items: CharacterSummary[];
+	items: T[];
 }
 
 export interface CharacterSummary {
 	resourceURI: string;
 	name: string;
-}
-
-export interface CreatorList {
-	available: number;
-	returned: number;
-	collectionURI: string;
-	items: CreatorSummary[];
 }
 
 export interface CreatorSummary {
@@ -34,23 +27,9 @@ export interface CreatorSummary {
 	role: string;
 }
 
-export interface ComicList {
-	available: number;
-	returned: number;
-	collectionURI: string;
-	items: ComicSummary[];
-}
-
 export interface ComicSummary {
 	resourceURI: string;
 	name: string;
-}
-
-export interface StoryList {
-	available: number;
-	returned: number;
-	collectionURI: string;
-	items: StorySummary[];
 }
 
 export interface StorySummary {
@@ -59,23 +38,9 @@ export interface StorySummary {
 	type: string;
 }
 
-export interface EventList {
-	available: number;
-	returned: number;
-	collectionURI: string;
-	items: EventSummary[];
-}
-
 export interface EventSummary {
 	resourceURI: string;
 	name: string;
-}
-
-export interface SeriesList {
-	available: number;
-	returned: number;
-	collectionURI: string;
-	items: SeriesSummary[];
 }
 
 export interface SeriesSummary {
@@ -87,15 +52,15 @@ export interface SeriesSummary {
 export interface Character {
 	id: number;
 	name: string;
-	description: string;
-	modified: string;
+	description?: string | null;
+	modified?: string | null;
 	resourceURI: string;
 	urls: Url[];
 	thumbnail: Image;
-	comics: ComicList;
-	stories: StoryList;
-	events: EventList;
-	series: SeriesList;
+	comics: ResourceList<ComicSummary>;
+	stories: ResourceList<StorySummary>;
+	events: ResourceList<EventSummary>;
+	series: ResourceList<SeriesSummary>;
 }
 
 // Comic types
@@ -121,8 +86,8 @@ export interface Comic {
 	title: string;
 	issueNumber: number;
 	variantDescription: string;
-	description: string | null;
-	modified: string;
+	description?: string | null;
+	modified?: string | null;
 	isbn: string;
 	upc: string;
 	diamondCode: string;
@@ -141,29 +106,29 @@ export interface Comic {
 	prices: ComicPrice[];
 	thumbnail: Image;
 	images: Image[];
-	creators: CreatorList;
-	characters: CharacterList;
-	stories: StoryList;
-	events: EventList;
+	creators: ResourceList<CreatorSummary>;
+	characters: ResourceList<CharacterSummary>;
+	stories: ResourceList<StorySummary>;
+	events: ResourceList<EventSummary>;
 }
 
 // Series types
 export interface Series {
 	id: number;
 	title: string;
-	description: string | null;
+	description?: string | null;
 	resourceURI: string;
 	urls: Url[];
 	startYear: number;
 	endYear: number;
 	rating: string;
-	modified: string;
+	modified?: string | null;
 	thumbnail: Image;
-	comics: ComicList;
-	stories: StoryList;
-	events: EventList;
-	characters: CharacterList;
-	creators: CreatorList;
+	comics: ResourceList<ComicSummary>;
+	stories: ResourceList<StorySummary>;
+	events: ResourceList<EventSummary>;
+	characters: ResourceList<CharacterSummary>;
+	creators: ResourceList<CreatorSummary>;
 	next: SeriesSummary | null;
 	previous: SeriesSummary | null;
 }
@@ -172,18 +137,18 @@ export interface Series {
 export interface Event {
 	id: number;
 	title: string;
-	description: string | null;
+	description?: string | null;
 	resourceURI: string;
 	urls: Url[];
-	modified: string;
+	modified?: string | null;
 	start: string | null;
 	end: string | null;
 	thumbnail: Image;
-	comics: ComicList;
-	stories: StoryList;
-	series: SeriesList;
-	characters: CharacterList;
-	creators: CreatorList;
+	comics: ResourceList<ComicSummary>;
+	stories: ResourceList<StorySummary>;
+	series: ResourceList<SeriesSummary>;
+	characters: ResourceList<CharacterSummary>;
+	creators: ResourceList<CreatorSummary>;
 	next: EventSummary | null;
 	previous: EventSummary | null;
 }
@@ -192,17 +157,17 @@ export interface Event {
 export interface Story {
 	id: number;
 	title: string;
-	description: string;
+	description?: string | null;
 	resourceURI: string;
 	type: string;
-	modified: string;
+	modified?: string | null;
 	thumbnail: Image | null;
-	comics: ComicList;
-	series: SeriesList;
-	events: EventList;
-	characters: CharacterList;
-	creators: CreatorList;
-	originalIssue: ComicSummary;
+	comics: ResourceList<ComicSummary>;
+	series: ResourceList<SeriesSummary>;
+	events: ResourceList<EventSummary>;
+	characters: ResourceList<CharacterSummary>;
+	creators: ResourceList<CreatorSummary>;
+	originalIssue: ComicSummary | null;
 }
 
 // Creator types
@@ -213,14 +178,14 @@ export interface Creator {
 	lastName: string;
 	suffix: string;
 	fullName: string;
-	modified: string;
+	modified?: string | null;
 	resourceURI: string;
 	urls: Url[];
 	thumbnail: Image;
-	series: SeriesList;
-	stories: StoryList;
-	comics: ComicList;
-	events: EventList;
+	series: ResourceList<SeriesSummary>;
+	stories: ResourceList<StorySummary>;
+	comics: ResourceList<ComicSummary>;
+	events: ResourceList<EventSummary>;
 }
 
 // API Response wrapper types
