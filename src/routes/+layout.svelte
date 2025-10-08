@@ -3,6 +3,8 @@
 	import { dev } from '$app/environment';
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount } from 'svelte';
+	import Header from '$lib/components/header.svelte';
+	import Footer from '$lib/components/footer.svelte';
 
 	let { children } = $props();
 
@@ -28,4 +30,24 @@
 	/>
 </svelte:head>
 
-{@render children?.()}
+<div class="app-container">
+	<Header />
+	<main>
+		{@render children?.()}
+	</main>
+	<Footer />
+</div>
+
+<style>
+	.app-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		background-color: var(--background-color);
+		color: var(--text-color);
+	}
+	main {
+		flex: 1;
+		padding: var(--padding-lg);
+	}
+</style>

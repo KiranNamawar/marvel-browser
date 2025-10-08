@@ -10,42 +10,58 @@
 button,
 input {
 	font: inherit;
-    appearance: none;
-    border: none;
-    background: none;
+	appearance: none;
+	border: none;
+	background: none;
 }
 
 svg {
-    display: flex;
+	display: flex;
 }
 
 /* Theme */
 :root {
-    color-scheme: light dark;
-    &[data-theme="light"] {
-        color-scheme: light;
-    }
-    &[data-theme="dark"] {
-        color-scheme: dark;
-    }
+	color-scheme: light dark;
+	&[data-theme='light'] {
+		color-scheme: light;
+	}
+	&[data-theme='dark'] {
+		color-scheme: dark;
+	}
 
-    --heading-font: "Fredericka the Great", serif;
-    --body-font: "Pompiere", sans-serif;
+	--heading-font: 'Fredericka the Great', serif;
+	--body-font: 'Pompiere', sans-serif;
 
-    --padding-sm: 0.25rem;
-    --padding: 0.5rem;
-    --padding-md: 0.75rem;
-    --padding-lg: 1rem;
+	--padding-sm: 0.25rem;
+	--padding: 0.5rem;
+	--padding-md: 0.75rem;
+	--padding-lg: 1rem;
 
-    --text-color: light-dark(black, white);
+	--text-color: light-dark(black, white);
+    --background-color: light-dark(beige, #121212);
 }
 
 /* Base */
 body {
-    font-family: var(--body-font);
-    padding: var(--padding-lg);
+	font-family: var(--body-font);
 }
-h1, h2, h3 {
-    color: red;
-    font-family: var(--heading-font);
+h1,
+h2,
+h3 {
+	color: red;
+	font-family: var(--heading-font);
+}
+
+/* Utility */
+.spin {
+	animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
