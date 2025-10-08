@@ -1,0 +1,51 @@
+/* Reset */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+button,
+input {
+	font: inherit;
+    appearance: none;
+    border: none;
+    background: none;
+}
+
+svg {
+    display: flex;
+}
+
+/* Theme */
+:root {
+    color-scheme: light dark;
+    &[data-theme="light"] {
+        color-scheme: light;
+    }
+    &[data-theme="dark"] {
+        color-scheme: dark;
+    }
+
+    --heading-font: "Fredericka the Great", serif;
+    --body-font: "Pompiere", sans-serif;
+
+    --padding-sm: 0.25rem;
+    --padding: 0.5rem;
+    --padding-md: 0.75rem;
+    --padding-lg: 1rem;
+
+    --text-color: light-dark(black, white);
+}
+
+/* Base */
+body {
+    font-family: var(--body-font);
+    padding: var(--padding-lg);
+}
+h1, h2, h3 {
+    color: red;
+    font-family: var(--heading-font);
+}
