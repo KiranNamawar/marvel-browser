@@ -4,6 +4,27 @@ export interface Image {
 	extension: string;
 }
 
+export type ImageVariant = 
+	| 'detail'					// 500px wide
+	| 'standard_small'			// 65 x 45px
+	| 'standard_medium'			// 100 x 100px
+	| 'standard_large'			// 140 x 140px
+	| 'standard_xlarge'			// 200 x 200px
+	| 'standard_fantastic'		// 250 x 250px
+	| 'standard_amazing'		// 180 x 180px
+	| 'portrait_small'			// 50 x 75px
+	| 'portrait_medium'			// 100 x 150px
+	| 'portrait_xlarge'			// 150 x 225px
+	| 'portrait_fantastic'		// 168 x 252px
+	| 'portrait_uncanny'		// 300 x 450px
+	| 'portrait_incredible'		// 216 x 324px
+	| 'landscape_small'			// 120 x 90px
+	| 'landscape_medium'		// 175 x 130px
+	| 'landscape_large'			// 190 x 140px
+	| 'landscape_xlarge'		// 270 x 200px
+	| 'landscape_amazing'		// 250 x 156px
+	| 'landscape_incredible';	// 464 x 261px
+
 export interface Url {
 	type: 'detail' | 'wiki' | 'comiclink' | string;
 	url: string;
