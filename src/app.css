@@ -44,6 +44,7 @@ svg {
 /* Base */
 body {
 	font-family: var(--body-font);
+    line-height: 1.5;
 }
 h1,
 h2,
