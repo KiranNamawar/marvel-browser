@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { Loader } from '@lucide/svelte';
 	import { getCharacters } from '$lib/api/characters';
-	import type { Character } from '$lib/types/marvel';
+	import type { Character as MarvelCharacter } from '$lib/types/marvel';
 	import { getImageUrl, isImageAvailable } from '$lib/utils/image';
 	import { onMount } from 'svelte';
 	import { createObserver } from '$lib/utils/observer';
+	import Character from '$lib/components/character.svelte';
 
 	let offset = $state(0);
-	let characters = $state<null | Character[]>(null);
+	let characters = $state<null | MarvelCharacter[]>(null);
 	let loading = $state(false);
 	let hasMore = $state(true);
 	let error = $state<string | null>(null);
@@ -26,7 +27,7 @@
 			} else {
 				characters = filtered;
 			}
-			info = `Showing ${offset + res.data.count} of ${res.data.total} characters.`;
+			info = `Showing ${offset + res.data.count} [${characters.length}] of ${res.data.total} characters.`;
 			offset += 20;
 			error = null;
 		} catch (err) {
@@ -45,8 +46,8 @@
 {:else if characters}
 	<p class="info">{info}</p>
 	<section>
-		{#each characters as c}
-			<img src={getImageUrl(c.thumbnail, 'standard_xlarge')} alt={c.name} />
+		{#each characters as character}
+			<Character {character} />
 		{/each}
 	</section>
 	<div class="observer" {@attach (node) => createObserver(node, loadData)}>
@@ -65,7 +66,7 @@
 		justify-content: center;
 	}
 	.observer {
-        margin-top: 1rem;
+		margin-top: 1rem;
 		display: flex;
 		justify-content: center;
 		font-size: large;
