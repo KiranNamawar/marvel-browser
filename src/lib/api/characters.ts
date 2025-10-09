@@ -1,9 +1,9 @@
 import type { CharacterDataWrapper } from '$lib/types/marvel';
 import { getMarvelData } from './data';
 
-export async function getCharacters(
-	offset: number,
+export function getCharacters(
+	offset: number = 0,
 	limit: number = 20
 ): Promise<CharacterDataWrapper> {
-	return await getMarvelData('characters', { offset, limit });
+	return getMarvelData('characters', { offset, limit });
 }

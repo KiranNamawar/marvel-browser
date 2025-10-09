@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { getCharacters } from '$lib/api/characters';
-	import Character from '$lib/components/character.svelte';
+	import { getComics } from '$lib/api/comics';
+	import Comic from '$lib/components/comic.svelte';
 	import InfiniteScroll from '$lib/components/infinite-scroll.svelte';
 	import { isImageAvailable } from '$lib/utils/image';
 </script>
 
 <InfiniteScroll
-	getData={getCharacters}
-	Item={Character}
+	getData={getComics}
+	Item={Comic}
 	filterFn={(i) => isImageAvailable(i.thumbnail)}
 />

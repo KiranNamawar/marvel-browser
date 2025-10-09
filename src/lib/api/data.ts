@@ -11,25 +11,22 @@ interface Options {
 type Endpoint =
 	`${'characters' | 'comics' | 'series' | 'events' | 'stories' | 'creators'}${string}`;
 
-export async function getMarvelData(
-	endpoint: Endpoint,
-	options: Options = { offset: 0, limit: 20 }
-): Promise<any> {
+export async function getMarvelData(endpoint: Endpoint, options: Options) {
 	try {
 		const url = new URL(endpoint, BASE_URL);
+
 		const params = new URLSearchParams(url.search);
 		params.set('apikey', PUBLIC_MARVEL_API_KEY);
-
 		for (let [key, value] of Object.entries(options)) {
 			params.set(key, String(value));
 		}
-        url.search = params.toString();
+		url.search = params.toString();
 
 		const res = await fetch(url.href);
 		if (!res.ok) {
 			throw new Error(`API Error: ${res.status} ${res.statusText}`);
 		}
-		return await res.json();
+		return res.json();
 	} catch (err) {
 		console.error('Error in getMarvelData: ', err);
 		throw err;

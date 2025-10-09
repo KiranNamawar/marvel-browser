@@ -19,6 +19,11 @@ svg {
 	display: flex;
 }
 
+a {
+	color: var(--text-color);
+	text-decoration: none;
+}
+
 /* Theme */
 :root {
 	color-scheme: light dark;
@@ -37,6 +42,8 @@ svg {
 	--padding-md: 0.75rem;
 	--padding-lg: 1rem;
 
+	--border-radius: 10px;
+	
 	--text-color: light-dark(black, white);
     --background-color: light-dark(beige, #121212);
 }

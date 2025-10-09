@@ -228,8 +228,6 @@ export interface MarvelDataWrapper<T> {
 	etag: string;
 }
 
-export type MarvelEntity = Character | Comic | Series | Event | Story | Creator;
-
 // Specific response types
 export type CharacterDataWrapper = MarvelDataWrapper<Character>;
 export type ComicDataWrapper = MarvelDataWrapper<Comic>;
