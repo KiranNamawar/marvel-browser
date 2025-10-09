@@ -1,7 +1,7 @@
 <script lang="ts" generics="Entity">
 	import type { MarvelDataWrapper } from '$lib/types/marvel';
 	import { Loader } from '@lucide/svelte';
-	import { type Component } from 'svelte';
+	import { onMount, type Component } from 'svelte';
 
 	interface Props {
 		getData: (
@@ -61,11 +61,7 @@
 		};
 	}
 
-	$effect(() => {
-		if (!list) {
-			loadData();
-		}
-	});
+	onMount(loadData);
 </script>
 
 {#if list}
